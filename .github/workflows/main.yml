@@ -1,9 +1,12 @@
 name: Install and Expose Home Assistant
-runs-on: ubuntu-latest
-on: workflow_dispatch
+
+on:
+  push:
+    branches: [main]
+
 jobs:
   install-and-expose:
-    
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -25,4 +28,3 @@ jobs:
 
       - name: Open Ngrok Tunnel
         run: ngrok tcp 8123
-        
