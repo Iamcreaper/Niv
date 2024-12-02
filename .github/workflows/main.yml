@@ -1,9 +1,6 @@
 name: Install and Expose Home Assistant
 
 on:workflow_dispatch
-  push:
-    branches: [main]
-
 jobs:
   install-and-expose:
     runs-on: ubuntu-latest
