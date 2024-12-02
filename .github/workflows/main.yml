@@ -1,0 +1,31 @@
+name: Install and Expose Home Assistant
+
+on:workflow_dispatch
+  push:
+    branches: [main]
+
+jobs:
+  install-and-expose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Home Assistant Docker Image
+        run: |
+          docker buildx build --platform linux/arm64,linux/amd64 --tag homeassistant .
+
+      - name: Run Home Assistant Container
+        run: docker run -it -p 8123:8123 homeassistant
+
+      - name: Start Ngrok Tunnel
+        uses: ngrok/setup-ngrok@v3
+        with:
+          version: 'latest' # Optional: specify a specific Ngrok version
+          authtoken: 2pderiVbzAmZN2sBUIuVf3S3O0H_XYsxEgTfeThcv2242E2U # Replace with your Ngrok authtoken
+
+      - name: Open Ngrok Tunnel
+        run: ngrok tcp 8123
+        
