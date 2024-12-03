@@ -19,25 +19,15 @@ jobs:
         run: docker pull ngrok/ngrok
         
       - name: Build Home Assistant Docker Image
-        run: apt install \
-apparmor \
-bluez \
-cifs-utils \
-curl \
-dbus \
-jq \
-libglib2.0-bin \
-lsb-release \
-network-manager \
-nfs-common \
-systemd-journal-remote \
-systemd-resolved \
-udisks2 \
-wget -y
+        run: apt install apparmor bluez cifs-utils curl dbus jq libglib2.0-bin lsb-release network-manager nfs-common systemd-journal-remote systemd-resolved udisks2 wget -y
 
         
       - name: Run Home Assistant Container
-        run: docker run -it -p 8123:8123 homeassistant
+        run: curl -fsSL get.docker.com | sh
+
+      -name: sd
+        run: wget -O homeassistant-supervised.deb https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
+apt install ./homeassistant-supervised.deb
 
       - name: Start Ngrok Tunnel
         run: ngrok config add-authtoken 2pderiVbzAmZN2sBUIuVf3S3O0H_XYsxEgTfeThcv2242E2U
