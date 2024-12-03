@@ -34,10 +34,7 @@ jobs:
         run: docker run -it -p 8123:8123 homeassistant
 
       - name: Start Ngrok Tunnel
-        uses: ngrok/setup-ngrok@v3
-        with:
-          version: 'latest' # Optional: specify a specific Ngrok version
-          authtoken: 2pderiVbzAmZN2sBUIuVf3S3O0H_XYsxEgTfeThcv2242E2U # Replace with your Ngrok authtoken
+        run:ngrok config add-authtoken 2pderiVbzAmZN2sBUIuVf3S3O0H_XYsxEgTfeThcv2242E2U
 
       - name: Open Ngrok Tunnel
         run: ngrok tcp 8123
